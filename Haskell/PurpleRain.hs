@@ -3,30 +3,34 @@
 module Main
 where
 
-import qualified Data.Array.Unboxed as A (UArray, bounds, ixmap, listArray)
-import Data.Array.Base (foldlArray)
 
-type Problem = A.UArray Int Int
-
+type Problem = [Int]
 type Solution = (Int, Int)
 
 
 parse :: String -> Problem
-parse str = 
-    let rain_drops = [if c == 'B' then 1 else negate 1 | c <- head . lines $ str]
-        len = length rain_drops
-    in A.listArray (1, len) rain_drops
+parse str = [if c == 'B' then 1 else negate 1 | c <- head . lines $ str]
     
+{-
+
+plan:
+
+1. find global minimum closest to the left
+2. find global maximum closest to the left
+3. identify which of them is located to the right - this is end point
+4. identify start point by finding right-most point before end point in the given series that equals to global minimum/maximum located on the left
+
+-}
 
 solve :: Problem -> Solution
 solve p =
-    snd
-    . minimum
-    $ [(negate $ abs_diff a b, (a,b)) | a <- [l..u], b <- [a..u]]
-    where
-        (l, u) = A.bounds p
-        abs_diff :: Int -> Int -> Int
-        abs_diff from to = abs . foldlArray (+) 0 $ A.ixmap (from,to) id p
+    let scanned = tail $ scanl (+) 0 p
+        zipped = zip scanned [1..]
+        (_,min_idx) = minimum zipped
+        (_,max_idx) = (\(v,i) -> (v,negate i)) . maximum . map (\(v,idx) -> (v,negate idx)) $ zipped
+        start_idx = min min_idx max_idx
+        end_idx = max min_idx max_idx
+    in (if start_idx == 1 then 1 else start_idx + 1, end_idx)
 
 
 format :: Solution -> String
