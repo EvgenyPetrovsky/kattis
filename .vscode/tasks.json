@@ -7,9 +7,9 @@
             "label": "build (Haskell) for submission",
             "type": "shell",
             "command": [
-                "ghc -O2 -ferror-spans -threaded -rtsopts -o ${cwd}/build/runfile ${file}",
-                "&& rm ${fileDirname}/${fileBasenameNoExtension}.hi",
-                "&& rm ${fileDirname}/${fileBasenameNoExtension}.o"
+                "ghc -O2 -ferror-spans -threaded -rtsopts -o ${cwd}/build/runfile ${file};",
+                "rm -f ${fileDirname}/${fileBasenameNoExtension}.hi;",
+                "rm -f ${fileDirname}/${fileBasenameNoExtension}.o;"
             ],
             "problemMatcher": [],
             "group": {
@@ -21,9 +21,9 @@
             "label": "build (Haskell) for profiling",
             "type": "shell",
             "command": [
-                "ghc -O2 -ferror-spans -threaded -rtsopts -prof -fprof-late -o ${cwd}/build/runfile ${file}",
-                "&& rm ${fileDirname}/${fileBasenameNoExtension}.hi",
-                "&& rm ${fileDirname}/${fileBasenameNoExtension}.o"
+                "ghc -O2 -ferror-spans -threaded -rtsopts -prof -fprof-late -o ${cwd}/build/runfile ${file};",
+                "rm -f ${fileDirname}/${fileBasenameNoExtension}.hi;",
+                "rm -f ${fileDirname}/${fileBasenameNoExtension}.o;"
             ],
             "group": {
                 "kind": "build",
