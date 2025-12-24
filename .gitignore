@@ -1,0 +1,7 @@
+/input/
+/build/
+/output/
+
+*.hi
+*.o
+*.prof

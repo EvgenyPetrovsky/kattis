@@ -1,0 +1,45 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build (Haskell) for submission",
+            "type": "shell",
+            "command": [
+                "ghc -O2 -ferror-spans -threaded -rtsopts -o ${cwd}/build/runfile ${file}",
+                "&& rm ${fileDirname}/${fileBasenameNoExtension}.hi",
+                "&& rm ${fileDirname}/${fileBasenameNoExtension}.o"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build (Haskell) for profiling",
+            "type": "shell",
+            "command": [
+                "ghc -O2 -ferror-spans -threaded -rtsopts -prof -fprof-late -o ${cwd}/build/runfile ${file}",
+                "&& rm ${fileDirname}/${fileBasenameNoExtension}.hi",
+                "&& rm ${fileDirname}/${fileBasenameNoExtension}.o"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "run (Haskell)",
+            "type": "shell",
+            "command": "cat ${file} | ./build/runfile"
+        },
+        {
+            "label": "run (Haskell) with profiling",
+            "type": "shell",
+            "command": "cat ${file} | ./build/runfile +RTS -p"
+        },
+
+    ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "haskell",
+  "image": "haskell-dev",
+  "runArgs": [
+    "--volume=${localWorkspaceFolder}:/workspace:cached",
+    "--workdir=/workspace"
+  ],
+  "customizations": {
+    "vscode": {
+        "settings": {
+          "terminal.integrated.shell.linux": "/bin/bash"
+        }
+    }
+  },
+  "remoteUser": "root",
+  "workspaceFolder": "/workspace"
+}
